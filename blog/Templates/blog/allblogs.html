@@ -43,36 +43,58 @@
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link" href="https://twitter.com/professor_yuv">Twitter </a>
                 <a class="nav-item nav-link" href="{% static '_CV_.pdf' %}">Resume</a>
-                <a class="nav-item nav-link" href="{% url 'allblogs' %}">Blog</a>
+                <a class="nav-item nav-link active" href="{% url 'allblogs' %}">Blog</a>
             </div>
         </div>
-    </nav>
 </header>
 
 <main role="main">
-
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading">Hi I'm Yuv</h1>
-            <p class="lead text-muted">Hey I am new here. </p>
-            <p>
-                <a href="mailto:tanvirhossainyuvraz@gmail.com" class="btn btn-primary my-2">Email Me</a>
-            </p>
-            <img src="{% static 'yuv.jpg' %}" height="250" />
-        </div>
-    </section>
+    <div class="container">
+        <h1 class="text-center pt-3">Welcome to Yuv's Blog!</h1><br/><br/>
+        <h2 class="">Latest Posts</h2>
+        <hr/>
+    </div>
 
     <div class="album py-5 bg-light">
         <div class="container">
-
             <div class="row">
-                {% for job in jobs.all %}
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img class = "card-img-top" src={{job.image.url}} width="100px" height="225px">
-                        <div class="card-body">
-                            <p class="card-text" size="100">{{ job.descriptions }}</p>
+                {% for blog in blogs.all %}
 
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm ">
+                        <h2><p class="card-text">{{ blog.title }}</p></h2>
+                        <p class="card-text">{{ blog.pub_date_pretty }}</p>
+                        <img class = "card-img-top" src={{blog.image.url}} width="100px" height="225px">
+                        <div class="card-body">
+                            <p class="card-text" size="100">{{ blog.summary }}...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <!-- Open a Modal for the blog -->
+                                    <button  type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#modal{{ blog.pk }}">View More</button>
+                                    <!-- Modal -->
+
+                                    <div class="modal fade" id="modal{{ blog.pk }}" role="dialog">
+                                        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                            <!-- Modal content-->
+                                            <div class="modal-content ">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">{{ blog.title }}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>{{ blog.pub_date }}</p> <br/>
+                                                    <img src="{{ blog.image.url }}" style="max-height:100%;mx-width=100%;" ><br/><br/>
+                                                    <p>{{ blog.body }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +102,6 @@
             </div>
         </div>
     </div>
-
 </main>
 
 <footer class="text-muted text-center">
